@@ -1,3 +1,7 @@
+function tplawesome(e,t){
+    res=e;for(var n=0;n<t.length;n++){res=res.replace(/\{\{(.*?)\}\}/g,function(e,r){return t[n][r]})}return res};
+
+
 $(function() {
     $("form").on("submit", function(e){
        e.preventDefault();
@@ -13,6 +17,15 @@ $(function() {
        //execute the request
        request.execute(function(response) {
         console.log(response);
+        var results = response .result;
+        $.each(results.items,function (index, item){
+            console.log(item);
+             $.get("tpl/item.html", function(data){
+            // $("#results").append(item.id.videoId +" "+ item.snippet.title + "<br>" );
+               $("#results").append(tplawesome (data , [{"title" :item.snippet.title, "videoId":item.id.videoId}]));
+             });
+        });
+        
        });
 
     });
